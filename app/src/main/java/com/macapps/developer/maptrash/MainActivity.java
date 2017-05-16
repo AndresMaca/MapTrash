@@ -58,10 +58,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     LocationRequest mLocationRequest;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    private DatabaseReference ref2;
 
     Object strRoute;
     private Object o;
     private String string;
+    private String string2;
     private Boolean ready = false;
 
     /*
@@ -78,7 +80,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("message");
+        myRef = database.getReference("rutas").child("ruta1");
+        ref2 = database.getReference("rutas").child("ruta2");
 
 
         if (android.os.Build.VERSION.SDK_INT >= M) {
@@ -92,6 +95,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
                 o = dataSnapshot.getValue(Object.class);
+
                 string = o.toString();
                 // Toast.makeText(MainActivity.this, string, Toast.LENGTH_SHORT).show();
                 ready = true;
@@ -102,6 +106,19 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
+        ref2.addListenerForSingleValueEvent(new ValueEventListener(){
+                                       @Override
+                                       public void onDataChange(DataSnapshot dataSnapshot) {
+                                           string2=dataSnapshot.getValue(Object.class).toString();
+                                           ready=true;
+
+                                       }
+
+                                       @Override
+                                       public void onCancelled(DatabaseError databaseError) {
+
+                                       }
+                                   });
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         //SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -280,6 +297,92 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             try {
 
                 jsonArray = new JSONArray(string);
+                jsonArray1 = jsonArray.getJSONArray(0);
+
+                for (int i = 0; i < jsonArray1.length(); i++) {
+                    JSONObject jsonObject = jsonArray1.getJSONObject(i);
+                    for (int j = 0; j < jsonObject.length(); j++) {
+                        HashMap<String, Double> hashMap1 = new HashMap<>();
+                        String lat = jsonObject.getString("lat");
+                        String lng = jsonObject.getString("lng");
+
+                        //Todo Hacer dos Puntos de prueba
+                        hashMap1.put("lat", Double.parseDouble(jsonObject.getString("lat")));
+                        hashMap1.put("lng", Double.parseDouble(jsonObject.getString("lng")));
+                        hashMaps.add(hashMap1);
+                    }
+
+                }
+                //Toast.makeText(this, "Parse Completed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, hashMaps.toString(), Toast.LENGTH_LONG).show();
+                try {
+                    Log.i("HshMAp", "Entrando...");
+                    latLngs = new ArrayList<>();
+                    PolylineOptions polylineOptions;
+                    polylineOptions = new PolylineOptions();
+
+                    for (HashMap<String, Double> hashMap1 : hashMaps) {
+                        //       Toast.makeText(this, "lat: "+hashMap1.get("lat")+ "lng: "+hashMap1.get("lng"), Toast.LENGTH_SHORT).show();
+                        LatLng latLng=new LatLng(hashMap1.get("lat"),hashMap1.get("lng"));
+                        latLngs.add(latLng);
+
+
+
+                        ///TODO aqui Ya tenemos todos los puntos;
+
+                    }
+                    // LatLng latLng = new LatLng(2.454954, -76.597619);
+                    //LatLng latLng1 = new LatLng(2.442008, -76.606899);
+                    //  latLngs.add(latLng);
+                    // latLngs.add(latLng1);
+                    Toast.makeText(this, latLngs.toString(), Toast.LENGTH_SHORT).show();
+
+
+                    polylineOptions.addAll(latLngs);
+                    polylineOptions.width(10);
+                    polylineOptions.color(Color.RED);
+                    Toast.makeText(this, "Lat: " + latLngs.get(latLngs.size() - 1).latitude + "Long: " + latLngs.get(latLngs.size() - 1).longitude, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "size" + latLngs.size(), Toast.LENGTH_SHORT).show();
+                    if (polylineOptions != null) {
+
+                        mMap.addPolyline(polylineOptions);
+                        Toast.makeText(this, "Add Polyline", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Toast.makeText(this, "Poly is null", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                    //  textView.setText(data);
+
+                } catch (Exception e) {
+                    Log.e("String Parse Error", e.toString());
+                    Toast.makeText(this, "Error" + e.toString(), Toast.LENGTH_SHORT).show();
+                }
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d("Parse Error", e.toString());
+                Toast.makeText(this, "Error" + e.toString(), Toast.LENGTH_SHORT).show();
+
+            }
+
+        }
+
+    }
+    public void onClickSrvrDwnld2(View view) {
+
+        if (ready) {
+            Toast.makeText(this, "Downloading...", Toast.LENGTH_SHORT).show();
+            ArrayList<LatLng> latLngs;
+            JSONArray jsonArray;
+            JSONArray jsonArray1;
+
+            List<HashMap> hashMaps = new ArrayList<>();
+            try {
+
+                jsonArray = new JSONArray(string2);
                 jsonArray1 = jsonArray.getJSONArray(0);
 
                 for (int i = 0; i < jsonArray1.length(); i++) {
