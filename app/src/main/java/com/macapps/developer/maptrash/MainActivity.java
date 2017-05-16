@@ -314,7 +314,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
                 }
                 //Toast.makeText(this, "Parse Completed", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, hashMaps.toString(), Toast.LENGTH_LONG).show();
+              // Toast.makeText(this, hashMaps.toString(), Toast.LENGTH_LONG).show();
                 try {
                     Log.i("HshMAp", "Entrando...");
                     latLngs = new ArrayList<>();
@@ -335,14 +335,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     //LatLng latLng1 = new LatLng(2.442008, -76.606899);
                     //  latLngs.add(latLng);
                     // latLngs.add(latLng1);
-                    Toast.makeText(this, latLngs.toString(), Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(this, latLngs.toString(), Toast.LENGTH_SHORT).show();
 
 
                     polylineOptions.addAll(latLngs);
                     polylineOptions.width(10);
-                    polylineOptions.color(Color.RED);
-                    Toast.makeText(this, "Lat: " + latLngs.get(latLngs.size() - 1).latitude + "Long: " + latLngs.get(latLngs.size() - 1).longitude, Toast.LENGTH_LONG).show();
-                    Toast.makeText(this, "size" + latLngs.size(), Toast.LENGTH_SHORT).show();
+                    polylineOptions.color(Color.BLUE);
+                //    Toast.makeText(this, "Lat: " + latLngs.get(latLngs.size() - 1).latitude + "Long: " + latLngs.get(latLngs.size() - 1).longitude, Toast.LENGTH_LONG).show();
+                //    Toast.makeText(this, "size" + latLngs.size(), Toast.LENGTH_SHORT).show();
                     if (polylineOptions != null) {
 
                         mMap.addPolyline(polylineOptions);
@@ -400,7 +400,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
                 }
                 //Toast.makeText(this, "Parse Completed", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, hashMaps.toString(), Toast.LENGTH_LONG).show();
+             //   Toast.makeText(this, hashMaps.toString(), Toast.LENGTH_LONG).show();
                 try {
                     Log.i("HshMAp", "Entrando...");
                     latLngs = new ArrayList<>();
@@ -421,14 +421,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     //LatLng latLng1 = new LatLng(2.442008, -76.606899);
                     //  latLngs.add(latLng);
                     // latLngs.add(latLng1);
-                    Toast.makeText(this, latLngs.toString(), Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(this, latLngs.toString(), Toast.LENGTH_SHORT).show();
 
 
                     polylineOptions.addAll(latLngs);
                     polylineOptions.width(10);
                     polylineOptions.color(Color.RED);
-                    Toast.makeText(this, "Lat: " + latLngs.get(latLngs.size() - 1).latitude + "Long: " + latLngs.get(latLngs.size() - 1).longitude, Toast.LENGTH_LONG).show();
-                    Toast.makeText(this, "size" + latLngs.size(), Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(this, "Lat: " + latLngs.get(latLngs.size() - 1).latitude + "Long: " + latLngs.get(latLngs.size() - 1).longitude, Toast.LENGTH_LONG).show();
+                 //   Toast.makeText(this, "size" + latLngs.size(), Toast.LENGTH_SHORT).show();
                     if (polylineOptions != null) {
 
                         mMap.addPolyline(polylineOptions);
